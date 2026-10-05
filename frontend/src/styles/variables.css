@@ -1,0 +1,104 @@
+:root {
+  /* Fonts */
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, Cambria, serif;
+
+  /* Luxury Obsidian & Midnight Slate Palette */
+  --primary: #0F172A;
+  --primary-light: #1E293B;
+  --primary-dark: #070A12;
+  --primary-muted: #334155;
+
+  /* Champagne Gold & Warm Bronze Accents */
+  --accent: #C5A880;
+  --accent-gold: #D4AF37;
+  --accent-light: #EADBC8;
+  --accent-cream: #FDFBF7;
+  --accent-dark: #9F8257;
+  --gold-gradient: linear-gradient(135deg, #ECC880 0%, #D4AF37 50%, #B38628 100%);
+  --gold-glow: 0 8px 25px -4px rgba(212, 175, 55, 0.35);
+  --gold-border: rgba(197, 168, 128, 0.35);
+
+  /* Secondary Ocean Cyan */
+  --secondary: #0284C7;
+  --secondary-light: #38BDF8;
+  --secondary-dark: #0369A1;
+
+  /* Luxury Surfaces & Warm Neutrals */
+  --background: #F8F7F4;
+  --background-alt: #F1EFEA;
+  --surface: #FFFFFF;
+  --surface-elevated: #FFFFFF;
+  --surface-warm: #FAF8F5;
+
+  /* Text Colors */
+  --text-primary: #0F172A;
+  --text-secondary: #576071;
+  --text-light: #94A3B8;
+  --text-white: #FFFFFF;
+  --text-gold: #B38628;
+
+  /* Status Colors */
+  --success: #059669;
+  --success-light: #ECFDF5;
+  --warning: #D97706;
+  --warning-light: #FFFBEB;
+  --danger: #DC2626;
+  --danger-light: #FEF2F2;
+  --info: #2563EB;
+  --info-light: #EFF6FF;
+
+  /* Borders & Dividers */
+  --border: #E5E7EB;
+  --border-light: #F3F4F6;
+  --border-gold: rgba(197, 168, 128, 0.3);
+  --divider: #EAE6DF;
+
+  /* Ratings */
+  --star: #F59E0B;
+  --star-empty: #CBD5E1;
+
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.88);
+  --glass-bg-dark: rgba(15, 23, 42, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-border-dark: rgba(255, 255, 255, 0.12);
+  --glass-blur: blur(16px);
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 20px;
+  --spacing-xxl: 28px;
+  --spacing-xxxl: 40px;
+  --spacing-huge: 64px;
+
+  /* Radius */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-xxl: 32px;
+  --radius-round: 9999px;
+
+  /* Luxury Shadows */
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-sm: 0 2px 6px -1px rgba(15, 23, 42, 0.07), 0 1px 3px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 4px 10px -3px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 20px 40px -12px rgba(15, 23, 42, 0.12), 0 8px 16px -6px rgba(15, 23, 42, 0.06);
+  --shadow-hover: 0 25px 50px -12px rgba(15, 23, 42, 0.16), 0 0 1px 1px rgba(197, 168, 128, 0.25);
+  --shadow-gold: 0 12px 30px -8px rgba(212, 175, 55, 0.28);
+
+  /* Transitions */
+  --transition-fast: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout */
+  --max-width: 1280px;
+  --header-height: 80px;
+  --sidebar-width: 270px;
+}

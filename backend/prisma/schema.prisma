@@ -1,0 +1,169 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String    @id @default(uuid())
+  name                String    @db.NVarChar(100)
+  email               String    @unique @db.NVarChar(200)
+  passwordHash        String    @db.NVarChar(255)
+  phone               String?   @db.NVarChar(20)
+  avatarUrl           String?   @db.NVarChar(500)
+  role                String    @default("USER") @db.NVarChar(50)
+  isEmailVerified     Boolean   @default(false)
+  emailVerifyToken    String?   @db.NVarChar(255)
+  emailVerifyExpiry   DateTime?
+  resetPasswordToken  String?   @db.NVarChar(255)
+  resetPasswordExpiry DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  bookings            Booking[]
+  reviews             Review[]
+  favorites           Favorite[]
+  notifications       Notification[]
+
+  @@map("Users")
+}
+
+model Room {
+  id               String      @id @default(uuid())
+  name             String      @db.NVarChar(200)
+  type             String      @db.NVarChar(50)
+  pricePerNight    Decimal     @db.Decimal(18, 2)
+  location         String      @db.NVarChar(100)
+  description      String      @db.NVarChar(Max)
+  capacityAdults   Int         @default(2)
+  capacityChildren Int         @default(0)
+  quantity         Int         @default(1)
+  status           String      @default("AVAILABLE") @db.NVarChar(50)
+  amenities        String?     @db.NVarChar(Max)
+  avgRating        Decimal     @default(0) @db.Decimal(3, 2)
+  reviewCount      Int         @default(0)
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  bookings         Booking[]
+  reviews          Review[]
+  images           RoomImage[]
+  favorites        Favorite[]
+
+  @@map("Rooms")
+}
+
+model RoomImage {
+  id        String   @id @default(uuid())
+  roomId    String
+  url       String   @db.NVarChar(500)
+  isPrimary Boolean  @default(false)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@map("RoomImages")
+}
+
+model Booking {
+  id             String   @id @default(uuid())
+  userId         String
+  roomId         String
+  checkInDate    DateTime
+  checkOutDate   DateTime
+  nightCount     Int
+  guestsCount    Int      @default(1)
+  roomsCount     Int      @default(1)
+  specialRequest String?  @db.NVarChar(Max)
+  pricePerNight  Decimal  @db.Decimal(18, 2)
+  subtotal       Decimal  @db.Decimal(18, 2)
+  taxRate        Decimal  @default(0.10) @db.Decimal(5, 4)
+  taxAmount      Decimal  @db.Decimal(18, 2)
+  totalPrice     Decimal  @db.Decimal(18, 2)
+  status         String   @default("AWAITING_PAYMENT") @db.NVarChar(50)
+  paymentStatus  String   @default("UNPAID") @db.NVarChar(50)
+  paymentMethod  String?  @db.NVarChar(50)
+  momoOrderId    String?  @db.NVarChar(100)
+  momoTransId    String?  @db.NVarChar(100)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  room           Room     @relation(fields: [roomId], references: [id])
+  user           User     @relation(fields: [userId], references: [id])
+  payment        Payment?
+  voucherCode    String?  @db.NVarChar(50)
+  discountAmount Decimal? @db.Decimal(18, 2)
+
+  @@map("Bookings")
+}
+
+model Payment {
+  id             String    @id @default(uuid())
+  bookingId      String    @unique
+  method         String    @db.NVarChar(50)
+  amount         Decimal   @db.Decimal(18, 2)
+  momoOrderId    String?   @db.NVarChar(100)
+  momoTransId    String?   @db.NVarChar(100)
+  momoResultCode Int?
+  momoMessage    String?   @db.NVarChar(500)
+  momoPayUrl     String?
+  status         String    @default("UNPAID") @db.NVarChar(50)
+  paidAt         DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  booking        Booking   @relation(fields: [bookingId], references: [id])
+
+  @@map("Payments")
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  userId    String
+  roomId    String
+  rating    Int
+  comment   String   @db.NVarChar(Max)
+  createdAt DateTime @default(now())
+  room      Room     @relation(fields: [roomId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, roomId])
+  @@map("Reviews")
+}
+
+model Favorite {
+  id        String   @id @default(uuid())
+  userId    String
+  roomId    String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roomId])
+  @@map("Favorites")
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  title     String   @db.NVarChar(200)
+  message   String   @db.NVarChar(Max)
+  type      String   @default("INFO") // BOOKING, SYSTEM, PROMOTION
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("Notifications")
+}
+
+model Voucher {
+  id        String   @id @default(uuid())
+  code      String   @unique @db.NVarChar(50)
+  discount  Decimal  @db.Decimal(5, 2) // Ví dụ: 10.00 cho 10%
+  startDate DateTime
+  endDate   DateTime
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("Vouchers")
+}

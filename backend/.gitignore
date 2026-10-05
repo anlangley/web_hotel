@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env*.local
+!.env.example
+
+# Uploads
+uploads/*
+!uploads/.gitkeep
+
+# Logs & temp
+*.log
+errors.txt
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database & generated
+*.sqlite
+*.sqlite3
+*.db
+prisma/generated/
+dist/
